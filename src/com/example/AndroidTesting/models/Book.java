@@ -2,10 +2,13 @@ package com.example.AndroidTesting.models;
 
 public class Book {
 
+    private static int idGen = 0;
+    private int id;
     public String title;
-    public String author;
+    public Author author;
 
-    public Book(String title, String author) {
+    public Book(String title, Author author) {
+        this.id = idGen++;
         this.title = title;
         this.author = author;
     }

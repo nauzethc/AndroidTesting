@@ -1,9 +1,7 @@
 package com.example.AndroidTesting.adapters;
 
 
-import android.app.Activity;
 import android.content.Context;
-import android.graphics.drawable.Drawable;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -11,32 +9,22 @@ import android.view.ViewGroup;
 import android.widget.*;
 import com.example.AndroidTesting.R;
 import com.example.AndroidTesting.models.Book;
+import com.example.AndroidTesting.providers.BookProvider;
 
 import java.util.ArrayList;
-import java.util.Collections;
 
-public class BooksAdapter extends BaseAdapter implements Filterable {
+public class BookAdapter extends BaseAdapter implements Filterable {
 
     private BookFilter filter;
     private final ArrayList<Book> books;
     private ArrayList<Book> booksFiltered;
     private Context context;
 
-    public BooksAdapter(Context context) {
+    public BookAdapter(Context context) {
         this.context = context;
-
         // Load books
-        books = new ArrayList<Book>();
-        books.add( new Book("Game of Thrones",       "George R.R. Martin") );
-        books.add( new Book("Clash of Kings",        "George R.R. Martin") );
-        books.add( new Book("Storm of Swords",       "George R.R. Martin") );
-        books.add( new Book("Feast for Crows",       "George R.R. Martin") );
-        books.add( new Book("Dance with Dragons",    "George R.R. Martin") );
-        books.add( new Book("The Lord of the Rings", "J.R.R. Tolkien") );
-        books.add( new Book("The Hobbit",            "J.R.R. Tolkien") );
-        books.add( new Book("Silmarillion",          "J.R.R. Tolkien") );
+        books = BookProvider.getBooks();
         // Replicate to filtered
-        //Collections.copy(booksFiltered, books);
         booksFiltered = new ArrayList<Book>(books);
     }
 
@@ -81,7 +69,7 @@ public class BooksAdapter extends BaseAdapter implements Filterable {
         ViewHolder holder = (ViewHolder) bookView.getTag();
         Book book = (Book) getItem(position);
         holder.bookTitle.setText(book.title);
-        holder.bookAuthor.setText(book.author);
+        holder.bookAuthor.setText(book.author.name);
         holder.bookCover.setImageDrawable( context.getResources().getDrawable(R.drawable.ic_launcher) );
         return bookView;
     }
@@ -118,13 +106,8 @@ public class BooksAdapter extends BaseAdapter implements Filterable {
 
         @Override
         protected void publishResults(CharSequence constraint, FilterResults results) {
-            Log.d("test", results.values.toString());
-            if (results.count > 0) {
-                booksFiltered = (ArrayList<Book>) results.values;
-                notifyDataSetChanged();
-            } else {
-                notifyDataSetInvalidated();
-            }
+            booksFiltered = (ArrayList<Book>) results.values;
+            notifyDataSetChanged();
         }
     }
 }

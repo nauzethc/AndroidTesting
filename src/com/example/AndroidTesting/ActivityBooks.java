@@ -6,26 +6,26 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.widget.ListView;
 import android.widget.SearchView;
-import com.example.AndroidTesting.adapters.BooksAdapter;
+import com.example.AndroidTesting.adapters.BookAdapter;
 
-public class MyActivity extends Activity implements SearchView.OnQueryTextListener {
+public class ActivityBooks extends Activity implements SearchView.OnQueryTextListener {
 
     private ListView booksListView;
-    private BooksAdapter booksAdapter;
+    private BookAdapter bookAdapter;
 
     /** Called when the activity is first created. */
     @Override
     public void onCreate(Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_myactivity);
+        setContentView(R.layout.activity_books);
 
         getActionBar().setDisplayHomeAsUpEnabled(true);
         getActionBar().setHomeButtonEnabled(true);
 
-        booksAdapter = new BooksAdapter(getApplicationContext());
-        booksListView = (ListView) findViewById(R.id.ActivityMain_List);
-        booksListView.setAdapter(booksAdapter);
+        bookAdapter = new BookAdapter(getApplicationContext());
+        booksListView = (ListView) findViewById(R.id.ActivityBooks_List);
+        booksListView.setAdapter(bookAdapter);
     }
 
     @Override
@@ -47,7 +47,7 @@ public class MyActivity extends Activity implements SearchView.OnQueryTextListen
 
     @Override
     public boolean onQueryTextChange(String newText) {
-        booksAdapter.getFilter().filter(newText);
+        bookAdapter.getFilter().filter(newText);
         return true;
     }
 }
